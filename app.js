@@ -19,6 +19,15 @@ app.get("/api/filmes", async (req, res) => {
   res.status(200).json(filmes);
 });
 
+app.get("/api/filmes?annee=:annee", async (req, res) => {
+  const data = await readFile("./data/filmes.json", "utf-8");
+  const filmes = JSON.parse(data);
+  const annee = parseInt(req.params.annee);
+  const filmsByYear = filmes.filter(f => f.annee === annee);
+  res.json(filmsByYear);
+});
+
+
 app.get("/api/filmes/:id", async (req, res) => {
     const data = await readFile("./data/filmes.json", "utf-8");
     const filmes = JSON.parse(data);
